@@ -2,6 +2,8 @@
   "name": "algorithmic_test",
   "version": "1.0.0",
   "main": "index.js",
+  "repository": "https://github.com/dylanleking/Recast.AI-Test.git",
+  "author": "Dylan Merigaud <dylanmerigaud@gmail.com>",
   "license": "MIT",
   "scripts": {
     "start": "node ./index.js",
@@ -18,8 +20,8 @@
   "lint-staged": {
     "*.js": [
       "prettier --write",
-      "git add",
-      "jest --env=node --bail --findRelatedTests"
+      "jest --env=node --bail --findRelatedTests",
+      "git add"
     ]
   }
 }

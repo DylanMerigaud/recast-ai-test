@@ -1,6 +1,8 @@
 {
   "name": "build_a_webbot",
   "version": "1.0.0",
+  "repository": "https://github.com/dylanleking/Recast.AI-Test.git",
+  "author": "Dylan Merigaud <dylanmerigaud@gmail.com>",
   "license": "MIT",
   "scripts": {
     "precommit": "lerna run --concurrency 1 --stream precommit"
