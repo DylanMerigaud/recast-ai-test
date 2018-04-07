@@ -1,13 +1,13 @@
 import React from "react";
 import { withStyles } from "material-ui/styles";
+import Typography from "material-ui/Typography";
+import PropTypes from "prop-types";
 
 const styles = theme => ({
   root: {
-    backgroundColor: "green",
-    borderRadius: "25px",
-    padding: "6px 8px 6px 8px",
-    margin: "6px 0 6px 0",
-    alignSelf: "flex-start"
+    padding: "0 8px 0 8px",
+    alignSelf: "flex-start",
+    userSelect: "none"
   },
   textBlink: {
     animation: "blinker 2s linear infinite"
@@ -24,10 +24,20 @@ function BotIsTyping(props) {
 
   if (show)
     return (
-      <div className={classes.root}>
+      <Typography variant="body1" className={classes.root}>
         <span className={classes.textBlink}>Bot is thinking ...</span>
-      </div>
+      </Typography>
     );
+  else return null;
 }
+
+BotIsTyping.propTypes = {
+  classes: PropTypes.object,
+  show: PropTypes.bool
+};
+
+BotIsTyping.defaultProps = {
+  show: false
+};
 
 export default withStyles(styles)(BotIsTyping);

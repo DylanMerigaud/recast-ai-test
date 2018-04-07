@@ -1,32 +1,52 @@
 import React from "react";
 import { withStyles } from "material-ui/styles";
 import Input from "material-ui/Input";
+import IconButton from "material-ui/IconButton";
 import MdImage from "react-icons/lib/md/image";
+import MdLightbulbOutline from "react-icons/lib/md/lightbulb-outline";
+import PropTypes from "prop-types";
 
 const styles = theme => ({
   root: {
     padding: "6px",
-    backgroundColor: "blue",
+    backgroundColor: theme.palette.background.default,
     display: "flex",
     alignItems: "center",
-    borderTop: "1px solid black"
+    borderTop: `1px solid ${theme.palette.divider}`
   },
-  imageIcon: {
-    width: "1.5rem",
-    height: "1.5rem",
-    paddingLeft: "6px"
+  input: {
+    flexGrow: "1"
   }
 });
 
 function UserInput(props) {
-  const { classes } = props;
+  const { classes, changeTheme } = props;
 
   return (
     <div className={classes.root}>
-      <Input multiline fullWidth placeholder="Type a message..." />
-      <MdImage className={classes.imageIcon} />
+      <Input
+        className={classes.input}
+        multiline
+        fullWidth
+        placeholder="Type a message..."
+      />
+      <IconButton>
+        <MdImage />
+      </IconButton>
+      <IconButton>
+        <MdLightbulbOutline onClick={changeTheme} />
+      </IconButton>
     </div>
   );
 }
+
+UserInput.propTypes = {
+  classes: PropTypes.object,
+  changeTheme: PropTypes.func
+};
+
+UserInput.defaultProps = {
+  changeTheme: () => console.log("changed Theme.")
+};
 
 export default withStyles(styles)(UserInput);
