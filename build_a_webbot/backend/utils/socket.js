@@ -57,7 +57,7 @@ function initSocket(server) {
         recastaiBuild.dialog({ type: 'text', content: messageFromUser.text}, { conversationId: conversationID})
   .then(function(res) {
     socket.emit("botIsThinkingDone");
-    if (res.messages.length < 1)
+    if (res.messages.length < 1 || res.messages.type !== 'text')
     return ;
     const messageFromBot = new Message({text: res.messages[0].content, origin: 'bot'});
     messageFromBot.save(err=>{
@@ -78,7 +78,6 @@ function initSocket(server) {
       })
     })
     });
-
 
     // disconnect is fired when a client leaves the server
     socket.on("disconnect", () => {
