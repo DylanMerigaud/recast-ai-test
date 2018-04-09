@@ -17,7 +17,7 @@ import { combineReducers } from "redux";
 import { getNewArrayWithoutFirstMatching } from "utils/helper";
 
 const initialChatState = {
-  conversationID: null,
+  conversationID: Cookies.get("conversationID") || null,
   conversationLoading: false,
   messages: [],
   pendingMessages: [],
@@ -29,7 +29,7 @@ const initialChatState = {
 const chat = (state = initialChatState, action) => {
   const { type, conversation, message, socket, value } = action;
   if (type === SET_SOCKET) {
-    socket.emit("retrieveConversation", Cookies.get("conversationID"));
+    socket.emit("retrieveConversation", state.conversationID);
     return Object.assign({}, state, { socket, conversationLoading: true });
   } else if (type === AN_ERROR_OCCURED) {
     Cookies.remove("conversationID");
