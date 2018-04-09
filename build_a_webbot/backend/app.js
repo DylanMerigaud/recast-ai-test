@@ -14,8 +14,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use(express.static(path.join(__dirname, "./../webclient/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./../webclient/build"));
+});
 
 app.use(function(req, res, next) {
   next(createError(404));

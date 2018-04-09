@@ -5,6 +5,7 @@
   "author": "Dylan Merigaud <dylanmerigaud@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "start": "cd ./build_a_webbot && yarn start",
     "heroku-postbuild": "cd ./build_a_webbot && yarn build",
     "postinstall": "yarn install-algorithmic_test && yarn install-build_a_webbot",
     "install-algorithmic_test": "cd ./algorithmic_test/ && yarn",
