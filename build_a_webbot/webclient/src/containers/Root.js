@@ -28,14 +28,14 @@ class Root extends Component {
       receiveMessage
     } = this.props;
     setSocket(
-      initSocket(
+      initSocket({
         anErrorOccured,
         retrieveConversationDone,
         sendUserMessageDone,
         botIsThinking,
         botIsThinkingDone,
         receiveMessage
-      )
+      })
     );
   }
 

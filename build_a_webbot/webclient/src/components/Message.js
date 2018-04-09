@@ -12,19 +12,21 @@ const styles = theme => ({
   }
 });
 
-function getAdditionalStyles(
+function getAdditionalStyles({
   fromUser,
   startingGroup,
   endingGroup,
   inGroup,
-  theme
-) {
+  theme,
+  pending
+}) {
   const additionalStyles = {
     alignSelf: fromUser ? "flex-end" : "flex-start"
   };
-  if (fromUser)
+  if (pending)
+    additionalStyles.backgroundColor = theme.palette.background.pendingMessage;
+  else if (fromUser)
     additionalStyles.backgroundColor = theme.palette.background.userMessage;
-
   additionalStyles[fromUser ? "marginLeft" : "marginRight"] = "15px";
   if (inGroup) {
     const corners = fromUser ? [25, 5, 5, 25] : [5, 25, 25, 5];
@@ -47,15 +49,17 @@ function Message({
   fromUser,
   startingGroup,
   endingGroup,
-  inGroup
+  inGroup,
+  pending
 }) {
-  const additionalStyles = getAdditionalStyles(
+  const additionalStyles = getAdditionalStyles({
     fromUser,
     startingGroup,
     endingGroup,
     inGroup,
-    theme
-  );
+    theme,
+    pending
+  });
   return (
     <Typography
       variant="body1"
@@ -74,7 +78,8 @@ Message.propTypes = {
   fromUser: PropTypes.bool,
   startingGroup: PropTypes.bool,
   endingGroup: PropTypes.bool,
-  inGroup: PropTypes.bool
+  inGroup: PropTypes.bool,
+  pending: PropTypes.bool
 };
 
 Message.defaultProps = {
@@ -82,7 +87,8 @@ Message.defaultProps = {
   fromUser: false,
   startingGroup: false,
   endingGroup: false,
-  inGroup: false
+  inGroup: false,
+  pending: false
 };
 
 export default withStyles(styles, { withTheme: true })(Message);

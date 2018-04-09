@@ -29,7 +29,7 @@ function getMessageGroupProps(messages, index) {
 }
 
 function Chat(props) {
-  const { messages, botIsThinking } = props;
+  const { messages, pendingMessages, botIsThinking } = props;
   return (
     <Conversation>
       {messages.map(({ text, origin, _id }, index) => {
@@ -42,6 +42,17 @@ function Chat(props) {
           />
         );
       })}
+      {pendingMessages.map(({ text, origin, tempId }, index) => {
+        return (
+          <Message
+            text={text}
+            fromUser={origin !== "bot"}
+            key={tempId}
+            pending
+            {...getMessageGroupProps(pendingMessages, index)}
+          />
+        );
+      })}
       <BotIsThinking show={botIsThinking} />
     </Conversation>
   );
@@ -49,17 +60,20 @@ function Chat(props) {
 
 Chat.propTypes = {
   messages: PropTypes.array,
+  pendingMessages: PropTypes.array,
   botIsThinking: PropTypes.bool
 };
 
 Chat.defaultProps = {
   messages: [],
+  pendingMessages: [],
   botIsThinking: false
 };
 
 function mapStateToProps(state) {
   return {
     messages: state.chat.messages,
+    pendingMessages: state.chat.pendingMessages,
     botIsThinking: state.chat.botIsThinking
   };
 }

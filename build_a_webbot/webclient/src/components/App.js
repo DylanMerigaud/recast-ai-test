@@ -5,6 +5,7 @@ import Chat from "containers/Chat";
 import UserInput from "components/UserInput";
 import grey from "material-ui/colors/grey";
 import blue from "material-ui/colors/blue";
+import orange from "material-ui/colors/orange";
 import PropTypes from "prop-types";
 
 const styles = theme => ({
@@ -20,7 +21,8 @@ const lightTheme = createMuiTheme({
     type: "light",
     background: {
       paper: grey[200],
-      userMessage: blue[200]
+      userMessage: blue[200],
+      pendingMessage: orange[200]
     }
   }
 });
@@ -29,7 +31,8 @@ const darkTheme = createMuiTheme({
   palette: {
     type: "dark",
     background: {
-      userMessage: blue[500]
+      userMessage: blue[500],
+      pendingMessage: orange[500]
     }
   }
 });

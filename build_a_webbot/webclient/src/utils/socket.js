@@ -1,13 +1,13 @@
 import socketIOClient from "socket.io-client";
 
-export default function initSocket(
+export default function initSocket({
   anErrorOccured,
   retrieveConversationDone,
   sendUserMessageDone,
   botIsThinking,
   botIsThinkingDone,
   receiveMessage
-) {
+}) {
   const socket = socketIOClient(
     process.env.NODE_ENV === "production"
       ? "https://recast-ai-test.herokuapp.com/"

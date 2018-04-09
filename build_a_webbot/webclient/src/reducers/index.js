@@ -41,14 +41,21 @@ const chat = (state = initialChatState, action) => {
       messages: conversation.messages
     });
   } else if (type === SEND_USER_MESSAGE) {
-    const message = { text: state.messageInput, tempId: shortid.generate() };
+    const message = {
+      text: state.messageInput,
+      tempId: shortid.generate(),
+      origin: "user"
+    };
     const newpendingMessages = state.pendingMessages.slice();
     newpendingMessages.push(message);
     state.socket.emit("sendUserMessage", {
       message,
       conversationID: state.conversationID
     });
-    return Object.assign({}, state, { newpendingMessages, messageInput: "" });
+    return Object.assign({}, state, {
+      pendingMessages: newpendingMessages,
+      messageInput: ""
+    });
   } else if (type === SEND_USER_MESSAGE_DONE) {
     const newPendingMessages = getNewArrayWithoutFirstMatching(
       state.pendingMessages,
