@@ -65,7 +65,7 @@ function initSocket(server) {
                 )
                 .then(function(res) {
                   socket.emit("botIsThinkingDone");
-                  if (res.messages.length < 1 || res.messages.type !== "text")
+                  if (res.messages.length < 1 || res.messages[0].type !== "text")
                     return;
                   const messageFromBot = new Message({
                     text: res.messages[0].content,
