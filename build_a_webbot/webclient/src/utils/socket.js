@@ -8,7 +8,11 @@ export default function initSocket(
   botIsThinkingDone,
   receiveMessage
 ) {
-  const socket = socketIOClient(process.env.DOMAIN || "http://localhost:3000/");
+  const socket = socketIOClient(
+    process.env.NODE_ENV === "production"
+      ? "https://recast-ai-test.herokuapp.com/"
+      : "http://localhost:3000/"
+  );
 
   socket.on("anErrorOccured", () => {
     anErrorOccured();
