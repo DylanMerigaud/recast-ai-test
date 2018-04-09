@@ -2,7 +2,7 @@ import React from "react";
 import { withStyles } from "material-ui/styles";
 import Input from "material-ui/Input";
 import IconButton from "material-ui/IconButton";
-import MdImage from "react-icons/lib/md/image";
+// import MdImage from "react-icons/lib/md/image";
 import MdLightbulbOutline from "react-icons/lib/md/lightbulb-outline";
 import MdSend from "react-icons/lib/md/send";
 import PropTypes from "prop-types";
@@ -48,9 +48,11 @@ function UserInput({
       <IconButton disabled={messageInput === ""} type="submit">
         <MdSend />
       </IconButton>
-      <IconButton>
-        <MdImage />
-      </IconButton>
+      {
+        //   <IconButton>
+        //   <MdImage />
+        // </IconButton>
+      }
       <IconButton>
         <MdLightbulbOutline onClick={changeTheme} />
       </IconButton>

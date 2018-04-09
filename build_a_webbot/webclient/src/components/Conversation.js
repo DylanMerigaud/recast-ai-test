@@ -13,7 +13,8 @@ const styles = theme => {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      padding: "10px 15px 10px 15px"
+      //padding: "15px 15px 15px 15px",
+      width: "100%"
     }
   };
 };
@@ -30,9 +31,9 @@ function renderView({ style, ...viewProps }) {
   const viewStyle = {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "flex-end",
-    marginRight: "-18px",
-    marginBottom: "-18px"
+    justifyContent: "flex-end"
+    // marginRight: "-18px",
+    // marginBottom: "-18px"
   };
   return <div style={{ ...style, ...viewStyle }} {...viewProps} />;
 }

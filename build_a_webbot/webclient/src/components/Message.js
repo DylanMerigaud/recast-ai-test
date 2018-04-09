@@ -21,7 +21,9 @@ function getAdditionalStyles({
   pending
 }) {
   const additionalStyles = {
-    alignSelf: fromUser ? "flex-end" : "flex-start"
+    alignSelf: fromUser ? "flex-end" : "flex-start",
+    marginLeft: "10px",
+    marginRight: "10px"
   };
   if (pending)
     additionalStyles.backgroundColor = theme.palette.background.pendingMessage;
