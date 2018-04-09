@@ -4,6 +4,7 @@ import Input from "material-ui/Input";
 import IconButton from "material-ui/IconButton";
 import MdImage from "react-icons/lib/md/image";
 import MdLightbulbOutline from "react-icons/lib/md/lightbulb-outline";
+import MdSend from "react-icons/lib/md/send";
 import PropTypes from "prop-types";
 
 const styles = theme => ({
@@ -19,34 +20,57 @@ const styles = theme => ({
   }
 });
 
-function UserInput(props) {
-  const { classes, changeTheme } = props;
+function handleOnSubmit(e, sendMessage) {
+  e.preventDefault();
+  sendMessage();
+}
 
+function UserInput({
+  classes,
+  changeMessageInput,
+  messageInput,
+  changeTheme,
+  sendMessage
+}) {
   return (
-    <div className={classes.root}>
+    <form
+      onSubmit={e => handleOnSubmit(e, sendMessage)}
+      className={classes.root}
+    >
       <Input
         className={classes.input}
-        multiline
         fullWidth
+        disableUnderline
         placeholder="Type a message..."
+        onChange={e => changeMessageInput(e.target.value)}
+        value={messageInput}
       />
+      <IconButton disabled={messageInput === ""} type="submit">
+        <MdSend />
+      </IconButton>
       <IconButton>
         <MdImage />
       </IconButton>
       <IconButton>
         <MdLightbulbOutline onClick={changeTheme} />
       </IconButton>
-    </div>
+    </form>
   );
 }
 
 UserInput.propTypes = {
   classes: PropTypes.object,
-  changeTheme: PropTypes.func
+  changeMessageInput: PropTypes.func,
+  changeTheme: PropTypes.func,
+  sendMessage: PropTypes.func,
+  messageInput: PropTypes.string
 };
 
 UserInput.defaultProps = {
-  changeTheme: () => console.log("changed Theme.")
+  changeMessageInput: () => console.log("input changed."),
+  changeTheme: () => console.log("changed Theme."),
+  sendMessage: () => console.log("send message."),
+  messageInput: ""
 };
 
 export default withStyles(styles)(UserInput);

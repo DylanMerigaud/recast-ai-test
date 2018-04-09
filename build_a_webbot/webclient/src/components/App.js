@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import { withStyles } from "material-ui/styles";
 import { MuiThemeProvider, createMuiTheme } from "material-ui/styles";
+import Chat from "containers/Chat";
 import UserInput from "components/UserInput";
-import Conversation from "components/Conversation";
 import grey from "material-ui/colors/grey";
 import blue from "material-ui/colors/blue";
 import PropTypes from "prop-types";
@@ -34,36 +34,51 @@ const darkTheme = createMuiTheme({
   }
 });
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      theme: "light"
-    };
-  }
-
-  changeTheme() {
-    this.setState({
-      theme: this.state.theme === "light" ? "dark" : "light"
-    });
-  }
-
-  render() {
-    const { classes } = this.props;
-    const { theme } = this.state;
-    return (
-      <MuiThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
-        <div className={classes.root}>
-          <Conversation />
-          <UserInput changeTheme={() => this.changeTheme()} />
-        </div>
-      </MuiThemeProvider>
-    );
-  }
+function App({
+  classes,
+  theme,
+  changeMessageInput,
+  messageInput,
+  changeTheme,
+  sendMessage,
+  botIsThinking
+}) {
+  return (
+    <MuiThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
+      <div className={classes.root}>
+        <Chat botIsThinking={botIsThinking} />
+        <UserInput
+          changeTheme={changeTheme}
+          changeMessageInput={changeMessageInput}
+          messageInput={messageInput}
+          sendMessage={sendMessage}
+        />
+      </div>
+    </MuiThemeProvider>
+  );
 }
 
 App.propTypes = {
-  classes: PropTypes.object
+  classes: PropTypes.object,
+  theme: PropTypes.string,
+  changeMessageInput: PropTypes.func,
+  changeTheme: PropTypes.func,
+  sendMessage: PropTypes.func,
+  botIsThinking: PropTypes.bool
+};
+
+App.defaultProps = {
+  theme: "light",
+  changeMessageInput: () => {
+    console.log("Change input.");
+  },
+  changeTheme: () => {
+    console.log("Change theme.");
+  },
+  sendMessage: () => {
+    console.log("Send message.");
+  },
+  botIsThinking: false
 };
 
 export default withStyles(styles)(App);

@@ -19,9 +19,7 @@ const styles = theme => ({
   }
 });
 
-function BotIsTyping(props) {
-  const { classes, show } = props;
-
+function BotIsThinking({ classes, show }) {
   if (show)
     return (
       <Typography variant="body1" className={classes.root}>
@@ -31,13 +29,13 @@ function BotIsTyping(props) {
   else return null;
 }
 
-BotIsTyping.propTypes = {
+BotIsThinking.propTypes = {
   classes: PropTypes.object,
   show: PropTypes.bool
 };
 
-BotIsTyping.defaultProps = {
+BotIsThinking.defaultProps = {
   show: false
 };
 
-export default withStyles(styles)(BotIsTyping);
+export default withStyles(styles)(BotIsThinking);

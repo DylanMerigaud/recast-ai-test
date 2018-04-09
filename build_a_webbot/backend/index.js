@@ -4,9 +4,14 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var app = require('./app');
 var debug = require('debug')('backend:server');
 var http = require('http');
+require("dotenv").config({path: './.env.local'});
+const mongoose = require("mongoose");
+const initSocket = require('./utils/socket')
+
+mongoose.connect(process.env.DBURI);
 
 /**
  * Get port from environment and store in Express.
@@ -20,6 +25,7 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+initSocket(server);
 
 /**
  * Listen on provided port, on all network interfaces.
