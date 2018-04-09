@@ -5,6 +5,7 @@
   "author": "Dylan Merigaud <dylanmerigaud@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "start": "cd ./backend/ && yarn start",
     "postinstall": "yarn install-backend && yarn install-webclient",
     "install-backend": "cd ./backend/ && yarn",
     "install-webclient": "cd ./webclient/ && yarn",
