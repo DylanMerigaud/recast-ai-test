@@ -29,7 +29,7 @@
     "prettier": "^1.11.1"
   },
   "lint-staged": {
-    "*.js": [
+    "*.{js}": [
       "prettier --write",
       "react-scripts test --env=jsdom --bail --findRelatedTests",
       "git add"
