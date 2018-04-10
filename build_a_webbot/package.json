@@ -9,16 +9,19 @@
     "postinstall": "yarn install-backend && yarn install-webclient",
     "install-backend": "cd ./backend/ && yarn",
     "install-webclient": "cd ./webclient/ && yarn",
-    "dev": "concurrently --kill-others \"cd ./webclient && yarn dev\" \"cd ./backend && yarn dev\"",
+    "dev":
+      "concurrently --kill-others \"cd ./webclient && yarn dev\" \"cd ./backend && yarn dev\"",
     "build": "cd ./webclient && yarn build",
-    "precommit": "lerna run --concurrency 1 --stream precommit"
+    "precommit-backend": "cd ./backend && yarn precommit",
+    "precommit-webclient": "cd ./webclient && yarn precommit",
+    "precommit": "yarn precommit-backend && yarn precommit-webclient"
   },
   "devDependencies": {
-    "concurrently": "^3.5.1",
-    "husky": "^0.14.3",
-    "lerna": "^2.9.1"
+    "concurrently": "^3.5.1"
   },
-  "dependencies": {
-    "react-infinite": "^0.13.0"
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn precommit"
+    }
   }
 }

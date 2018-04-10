@@ -11,13 +11,11 @@
     "postinstall": "yarn install-algorithmic_test && yarn install-build_a_webbot",
     "install-algorithmic_test": "cd ./algorithmic_test/ && yarn",
     "install-build_a_webbot": "cd ./build_a_webbot/ && yarn",
-    "precommit": "lerna run --concurrency 1 --stream precommit"
+    "precommit-algorithmic_test": "cd ./algorithmic_test && yarn precommit",
+    "precommit-build_a_webbot": "cd ./build_a_webbot && yarn precommit",
+    "precommit": "yarn precommit-algorithmic_test && yarn precommit-build_a_webbot"
   },
   "devDependencies": {
-    "husky": "^0.14.3",
-    "lerna": "^2.9.1"
-  },
-  "dependencies": {
-    "redux-thunk": "^2.2.0"
+    "husky": "^0.15.0-rc.13"
   }
 }

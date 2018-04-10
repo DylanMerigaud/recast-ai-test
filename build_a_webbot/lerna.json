@@ -1,8 +1,0 @@
-{
-  "lerna": "2.9.1",
-  "packages": [
-    "webclient",
-    "backend"
-  ],
-  "version": "0.0.0"
-}
