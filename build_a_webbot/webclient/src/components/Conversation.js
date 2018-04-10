@@ -23,8 +23,9 @@ const styles = theme => {
 };
 
 class Conversation extends Component {
-  componentDidUpdate() {
-    this.timeout = setTimeout(() => this.refs.ScrollArea.scrollBottom(), 10);
+  componentDidUpdate(prevProps) {
+    if (prevProps.children !== this.props.children)
+      this.timeout = setTimeout(() => this.refs.ScrollArea.scrollBottom(), 10);
   }
 
   componentWillUnmount() {
