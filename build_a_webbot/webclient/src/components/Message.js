@@ -8,7 +8,8 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     borderRadius: "25px",
     padding: "6px 8px 6px 8px",
-    margin: "6px 0 6px 0"
+    margin: "10px 0 10px 0",
+    wordBreak: "break-word"
   }
 });
 
@@ -22,16 +23,16 @@ function getAdditionalStyles({
 }) {
   const additionalStyles = {
     alignSelf: fromUser ? "flex-end" : "flex-start",
-    marginLeft: "10px",
-    marginRight: "10px"
+    marginLeft: "15px",
+    marginRight: "15px"
   };
   if (pending)
     additionalStyles.backgroundColor = theme.palette.background.pendingMessage;
   else if (fromUser)
     additionalStyles.backgroundColor = theme.palette.background.userMessage;
-  additionalStyles[fromUser ? "marginLeft" : "marginRight"] = "15px";
+  additionalStyles[fromUser ? "marginLeft" : "marginRight"] = "25px";
   if (inGroup) {
-    const corners = fromUser ? [25, 5, 5, 25] : [5, 25, 25, 5];
+    const corners = fromUser ? [25, 10, 10, 25] : [10, 25, 25, 10];
     additionalStyles.marginTop = "2px";
     additionalStyles.marginBottom = "2px";
     if (startingGroup) corners[fromUser ? 1 : 0] = 25;

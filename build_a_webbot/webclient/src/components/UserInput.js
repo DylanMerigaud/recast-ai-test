@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 
 const styles = theme => ({
   root: {
+    minHeight: "48px",
     padding: "6px",
     backgroundColor: theme.palette.background.default,
     display: "flex",

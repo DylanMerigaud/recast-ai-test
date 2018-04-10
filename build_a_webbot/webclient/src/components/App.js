@@ -13,7 +13,8 @@ const styles = theme => ({
     height: "100%",
     display: "flex",
     flexDirection: "column",
-    minWidth: "300px"
+    minWidth: "300px",
+    backgroundColor: theme.palette.background.default
   }
 });
 
@@ -24,7 +25,8 @@ const lightTheme = createMuiTheme({
       paper: grey[200],
       userMessage: blue[200],
       pendingMessage: orange[200]
-    }
+    },
+    scrollBar: grey[400]
   }
 });
 
@@ -34,7 +36,8 @@ const darkTheme = createMuiTheme({
     background: {
       userMessage: blue[500],
       pendingMessage: orange[500]
-    }
+    },
+    scrollBar: grey[100]
   }
 });
 
@@ -47,8 +50,9 @@ function App({
   sendMessage,
   botIsThinking
 }) {
+  const currentTheme = theme === "dark" ? darkTheme : lightTheme;
   return (
-    <MuiThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
+    <MuiThemeProvider theme={currentTheme}>
       <div className={classes.root}>
         <Chat botIsThinking={botIsThinking} />
         <UserInput
