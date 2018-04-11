@@ -33,6 +33,7 @@
       "react-scripts test --env=jsdom --bail --findRelatedTests",
       "git add"
     ],
-    "*.{json}": ["prettier --write"]
+    "*.{json}": ["prettier --write",
+      "git add"]
   }
 }

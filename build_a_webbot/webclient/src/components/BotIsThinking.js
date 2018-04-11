@@ -22,8 +22,11 @@ const styles = theme => ({
 function BotIsThinking({ classes, show }) {
   if (show)
     return (
-      <Typography variant="body1" className={classes.root}>
-        <span className={classes.textBlink}>Bot is thinking ...</span>
+      <Typography
+        variant="body1"
+        className={classes.root + " " + classes.textBlink}
+      >
+        Bot is thinking ...
       </Typography>
     );
   else return null;

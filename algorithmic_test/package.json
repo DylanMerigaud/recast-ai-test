@@ -22,6 +22,8 @@
       "jest --env=node --bail --findRelatedTests",
       "git add"
     ],
-    "*.{json}": ["prettier --write"]
+    "*.{json}": [
+      "prettier --write",
+      "git add"]
   }
 }
