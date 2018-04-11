@@ -10,11 +10,6 @@ const styles = theme => {
       backgroundColor: theme.palette.background.default
     },
     scrollContent: {
-      overscrollBehavior: "none",
-      position: "absolute",
-      minWidth: "100%",
-      minHeight: "100%",
-      justifyContent: "flex-end",
       display: "flex",
       flexDirection: "column",
       alignItems: "center"
