@@ -10,6 +10,7 @@ const styles = theme => {
       backgroundColor: theme.palette.background.default
     },
     scrollContent: {
+      overscrollBehavior: "none",
       position: "absolute",
       minWidth: "100%",
       minHeight: "100%",
