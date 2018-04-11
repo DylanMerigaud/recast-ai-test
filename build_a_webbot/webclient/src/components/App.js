@@ -11,9 +11,13 @@ import PropTypes from "prop-types";
 const styles = theme => ({
   root: {
     height: "100%",
+    minHeight: "150px",
+    maxHeight: "100%",
+    width: "100%",
+    minWidth: "300px",
+    maxWidth: "100%",
     display: "flex",
     flexDirection: "column",
-    minWidth: "300px",
     backgroundColor: theme.palette.background.default
   }
 });

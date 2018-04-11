@@ -8,7 +8,6 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     borderRadius: "25px",
     padding: "6px 8px 6px 8px",
-    margin: "10px 0 10px 0",
     wordBreak: "break-word"
   }
 });
@@ -23,8 +22,8 @@ function getAdditionalStyles({
 }) {
   const additionalStyles = {
     alignSelf: fromUser ? "flex-end" : "flex-start",
-    marginLeft: "15px",
-    marginRight: "15px"
+    marginLeft: "10px",
+    marginRight: "10px"
   };
   if (pending)
     additionalStyles.backgroundColor = theme.palette.background.pendingMessage;

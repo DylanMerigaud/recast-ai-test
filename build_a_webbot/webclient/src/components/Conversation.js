@@ -1,26 +1,36 @@
 import React, { Component } from "react";
 import { withStyles } from "material-ui/styles";
-import ScrollArea from "react-scrollbar";
 import PropTypes from "prop-types";
 
 const styles = theme => {
   return {
     root: {
+      padding: "10px 0 10px 0",
+      overflow: "auto",
       flexGrow: "1",
-      backgroundColor: theme.palette.background.default
-    },
-    scrollContent: {
       display: "flex",
       flexDirection: "column",
-      alignItems: "center"
+      alignItems: "center",
+      backgroundColor: theme.palette.background.default,
+      "&::-webkit-scrollbar": {
+        width: "6px"
+      },
+      "&::-webkit-scrollbar-thumb": {
+        backgroundColor: theme.palette.scrollBar,
+        borderRadius: "5px"
+      }
     }
   };
 };
 
 class Conversation extends Component {
   componentDidUpdate(prevProps) {
-    if (prevProps.children !== this.props.children)
-      this.timeout = setTimeout(() => this.refs.ScrollArea.scrollBottom(), 10);
+    const { ScrollArea } = this.refs;
+    if (ScrollArea && prevProps.children !== this.props.children)
+      this.timeout = setTimeout(
+        () => (ScrollArea.scrollTop = ScrollArea.scrollHeight),
+        10
+      );
   }
 
   componentWillUnmount() {
@@ -28,19 +38,11 @@ class Conversation extends Component {
   }
 
   render() {
-    const { classes, children, theme } = this.props;
+    const { classes, children } = this.props;
     return (
-      <ScrollArea
-        vertical
-        verticalScrollbarStyle={{
-          backgroundColor: theme.palette.scrollBar || "red"
-        }}
-        className={classes.root}
-        ref="ScrollArea"
-        contentClassName={classes.scrollContent}
-      >
+      <div className={classes.root} ref="ScrollArea">
         {children}
-      </ScrollArea>
+      </div>
     );
   }
 }
