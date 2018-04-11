@@ -7,14 +7,13 @@ const styles = theme => {
   return {
     root: {
       flexGrow: "1",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "flex-end",
       backgroundColor: theme.palette.background.default
     },
     scrollContent: {
+      position: "absolute",
+      minWidth: "100%",
+      minHeight: "100%",
       justifyContent: "flex-end",
-      padding: "10px 0 10px 0",
       display: "flex",
       flexDirection: "column",
       alignItems: "center"
@@ -35,18 +34,17 @@ class Conversation extends Component {
   render() {
     const { classes, children, theme } = this.props;
     return (
-      <div className={classes.root}>
-        <ScrollArea
-          vertical
-          verticalScrollbarStyle={{
-            backgroundColor: theme.palette.scrollBar || "red"
-          }}
-          ref="ScrollArea"
-          contentClassName={classes.scrollContent}
-        >
-          {children}
-        </ScrollArea>
-      </div>
+      <ScrollArea
+        vertical
+        verticalScrollbarStyle={{
+          backgroundColor: theme.palette.scrollBar || "red"
+        }}
+        className={classes.root}
+        ref="ScrollArea"
+        contentClassName={classes.scrollContent}
+      >
+        {children}
+      </ScrollArea>
     );
   }
 }

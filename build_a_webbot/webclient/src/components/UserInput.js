@@ -40,7 +40,6 @@ function UserInput({
     >
       <Input
         className={classes.input}
-        fullWidth
         disableUnderline
         placeholder="Type a message..."
         onChange={e => changeMessageInput(e.target.value)}
