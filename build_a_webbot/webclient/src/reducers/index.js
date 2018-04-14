@@ -97,7 +97,10 @@ const chat = (state = initialChatState, action) => {
     state.socket.emit("retrieveConversation", state.conversationRetrieveValue);
   } else if (type === RESET_CONVERSATION) {
     Cookies.remove("conversationID");
-    return Object.assign({}, initialChatState, { socket: state.socket });
+    return Object.assign({}, initialChatState, {
+      conversationID: null,
+      socket: state.socket
+    });
   }
   return state;
 };
