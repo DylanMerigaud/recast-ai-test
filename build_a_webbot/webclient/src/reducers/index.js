@@ -8,65 +8,75 @@ import {
   BOT_IS_THINKING_DONE,
   RECEIVE_MESSAGE,
   CHANGE_MESSAGE_INPUT,
+  CHANGE_CONVERSATION_RETRIEVE_VALUE,
+  SUBMIT_CONVERSATION_RETRIEVE_VALUE,
   SWITCH_THEME
 } from "actions";
 
 import Cookies from "js-cookie";
 import shortid from "shortid";
 import { combineReducers } from "redux";
-import { getNewArrayWithoutFirstMatching } from "utils/helper";
 
 const initialChatState = {
   conversationID: Cookies.get("conversationID") || null,
   conversationLoading: false,
   messages: [],
-  pendingMessages: [],
   botIsThinking: false,
   error: false,
-  messageInput: ""
+  messageInput: "",
+  conversationRetrieveValue: ""
 };
 
 const chat = (state = initialChatState, action) => {
-  const { type, conversation, message, socket, value } = action;
+  const { type, conversation, message, socket, value, typeMessage } = action;
   if (type === SET_SOCKET) {
-    socket.emit("retrieveConversation", state.conversationID);
-    return Object.assign({}, state, { socket, conversationLoading: true });
+    if (state.conversationID !== null) {
+      socket.emit("retrieveConversation", state.conversationID);
+      return Object.assign({}, state, { socket, conversationLoading: true });
+    } else {
+      return Object.assign({}, state, { socket });
+    }
   } else if (type === AN_ERROR_OCCURED) {
-    Cookies.remove("conversationID");
+    //Cookies.remove("conversationID");
     return Object.assign({}, state, { error: true });
   } else if (type === RETRIEVE_CONVERSATION_DONE) {
     Cookies.set("conversationID", conversation._id);
+    const newMessages = state.messages.concat(conversation.messages);
     return Object.assign({}, state, {
       conversationID: conversation._id,
-      messages: conversation.messages
+      messages: newMessages
     });
   } else if (type === SEND_USER_MESSAGE) {
     const message = {
-      text: state.messageInput,
+      content: state.messageInput,
       tempId: shortid.generate(),
-      origin: "user"
+      origin: "user",
+      type: typeMessage
     };
-    const newpendingMessages = state.pendingMessages.slice();
-    newpendingMessages.push(message);
+    const newMessages = state.messages.slice();
+    newMessages.push(message);
     state.socket.emit("sendUserMessage", {
       message,
       conversationID: state.conversationID
     });
     return Object.assign({}, state, {
-      pendingMessages: newpendingMessages,
+      messages: newMessages,
       messageInput: ""
     });
   } else if (type === SEND_USER_MESSAGE_DONE) {
-    const newPendingMessages = getNewArrayWithoutFirstMatching(
-      state.pendingMessages,
+    const newMessages = state.messages.slice();
+    const existingMessageIndex = newMessages.findIndex(
       x => x.tempId === message.tempId
     );
-    const newMessages = state.messages.slice();
-    delete message.tempId;
-    newMessages.push(message);
+    if (existingMessageIndex !== -1) {
+      delete newMessages[existingMessageIndex].tempId;
+      newMessages[existingMessageIndex]._id = message._id;
+    } else {
+      delete message.tempId;
+      newMessages.push(message);
+    }
     return Object.assign({}, state, {
-      messages: newMessages,
-      pendingMessages: newPendingMessages
+      messages: newMessages
     });
   } else if (type === BOT_IS_THINKING) {
     return Object.assign({}, state, { botIsThinking: true });
@@ -78,6 +88,10 @@ const chat = (state = initialChatState, action) => {
     return Object.assign({}, state, { messages: newMessages });
   } else if (type === CHANGE_MESSAGE_INPUT) {
     return Object.assign({}, state, { messageInput: value });
+  } else if (type === CHANGE_CONVERSATION_RETRIEVE_VALUE) {
+    return Object.assign({}, state, { conversationRetrieveValue: value });
+  } else if (type === SUBMIT_CONVERSATION_RETRIEVE_VALUE) {
+    state.socket.emit("retrieveConversation", state.conversationRetrieveValue);
   }
   return state;
 };

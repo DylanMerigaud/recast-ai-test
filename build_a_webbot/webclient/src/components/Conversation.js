@@ -16,8 +16,7 @@ const styles = theme => {
         width: "6px"
       },
       "&::-webkit-scrollbar-thumb": {
-        backgroundColor: theme.palette.scrollBar,
-        borderRadius: "5px"
+        backgroundColor: theme.palette.scrollBar
       }
     }
   };
@@ -48,8 +47,8 @@ class Conversation extends Component {
 }
 
 Conversation.propTypes = {
-  classes: PropTypes.object,
-  theme: PropTypes.object
+  classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired
 };
 
 export default withStyles(styles, { withTheme: true })(Conversation);

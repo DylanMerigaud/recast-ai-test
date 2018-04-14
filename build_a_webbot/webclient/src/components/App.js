@@ -2,6 +2,7 @@ import React from "react";
 import { withStyles } from "material-ui/styles";
 import { MuiThemeProvider, createMuiTheme } from "material-ui/styles";
 import Chat from "containers/Chat";
+import DialogConversationRetrieve from "components/DialogConversationRetrieve";
 import UserInput from "components/UserInput";
 import grey from "material-ui/colors/grey";
 import blue from "material-ui/colors/blue";
@@ -26,8 +27,9 @@ const lightTheme = createMuiTheme({
   palette: {
     type: "light",
     background: {
-      paper: grey[200],
+      serverMessage: grey[200],
       userMessage: blue[200],
+      copyToClipboard: grey[300],
       pendingMessage: orange[200]
     },
     scrollBar: grey[400]
@@ -38,7 +40,9 @@ const darkTheme = createMuiTheme({
   palette: {
     type: "dark",
     background: {
+      serverMessage: grey[500],
       userMessage: blue[500],
+      copyToClipboard: grey[600],
       pendingMessage: orange[500]
     },
     scrollBar: grey[100]
@@ -49,10 +53,14 @@ function App({
   classes,
   theme,
   changeMessageInput,
+  changeConversationRetrieveValue,
+  conversationRetrieveValue,
   messageInput,
   changeTheme,
   sendMessage,
-  botIsThinking
+  submitConversationRetrieveValue,
+  botIsThinking,
+  alreadyHaveAConversation
 }) {
   const currentTheme = theme === "dark" ? darkTheme : lightTheme;
   return (
@@ -61,9 +69,15 @@ function App({
         <Chat botIsThinking={botIsThinking} />
         <UserInput
           changeTheme={changeTheme}
-          changeMessageInput={changeMessageInput}
-          messageInput={messageInput}
-          sendMessage={sendMessage}
+          onChange={changeMessageInput}
+          value={messageInput}
+          onSubmit={sendMessage}
+        />
+        <DialogConversationRetrieve
+          onChange={changeConversationRetrieveValue}
+          value={conversationRetrieveValue}
+          onSubmit={submitConversationRetrieveValue}
+          open={!alreadyHaveAConversation}
         />
       </div>
     </MuiThemeProvider>
@@ -71,26 +85,21 @@ function App({
 }
 
 App.propTypes = {
-  classes: PropTypes.object,
-  theme: PropTypes.string,
-  changeMessageInput: PropTypes.func,
-  changeTheme: PropTypes.func,
-  sendMessage: PropTypes.func,
-  botIsThinking: PropTypes.bool
+  classes: PropTypes.object.isRequired,
+  theme: PropTypes.string.isRequired,
+  changeMessageInput: PropTypes.func.isRequired,
+  messageInput: PropTypes.string.isRequired,
+  conversationRetrieveValue: PropTypes.string.isRequired,
+  changeConversationRetrieveValue: PropTypes.func.isRequired,
+  changeTheme: PropTypes.func.isRequired,
+  sendMessage: PropTypes.func.isRequired,
+  submitConversationRetrieveValue: PropTypes.func.isRequired,
+  botIsThinking: PropTypes.bool.isRequired,
+  alreadyHaveAConversation: PropTypes.bool.isRequired
 };
 
 App.defaultProps = {
-  theme: "light",
-  changeMessageInput: () => {
-    console.log("Change input.");
-  },
-  changeTheme: () => {
-    console.log("Change theme.");
-  },
-  sendMessage: () => {
-    console.log("Send message.");
-  },
-  botIsThinking: false
+  theme: "light"
 };
 
 export default withStyles(styles)(App);

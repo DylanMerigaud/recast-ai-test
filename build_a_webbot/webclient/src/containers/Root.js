@@ -12,7 +12,9 @@ import {
   botIsThinking,
   botIsThinkingDone,
   receiveMessage,
-  changeMessageInput
+  changeMessageInput,
+  changeConversationRetrieveValue,
+  submitConversationRetrieveValue
 } from "actions";
 import { switchTheme } from "actions";
 
@@ -46,7 +48,11 @@ class Root extends Component {
       theme,
       messageInput,
       changeMessageInput,
-      sendUserMessage
+      sendUserMessage,
+      conversationRetrieveValue,
+      changeConversationRetrieveValue,
+      alreadyHaveAConversation,
+      submitConversationRetrieveValue
     } = this.props;
     return (
       <App
@@ -56,26 +62,35 @@ class Root extends Component {
         changeMessageInput={changeMessageInput}
         messageInput={messageInput}
         sendMessage={sendUserMessage}
+        changeConversationRetrieveValue={changeConversationRetrieveValue}
+        conversationRetrieveValue={conversationRetrieveValue}
+        submitConversationRetrieveValue={submitConversationRetrieveValue}
+        alreadyHaveAConversation={alreadyHaveAConversation}
       />
     );
   }
 }
 
 Root.propTypes = {
-  messages: PropTypes.array,
-  botIsThinkingBool: PropTypes.bool,
-  changeTheme: PropTypes.func,
-  theme: PropTypes.string,
-  messageInput: PropTypes.string,
-  changeMessageInput: PropTypes.func,
-  sendUserMessage: PropTypes.func
+  botIsThinkingBool: PropTypes.bool.isRequired,
+  changeTheme: PropTypes.func.isRequired,
+  theme: PropTypes.string.isRequired,
+  messageInput: PropTypes.string.isRequired,
+  changeMessageInput: PropTypes.func.isRequired,
+  conversationRetrieveValue: PropTypes.string.isRequired,
+  changeConversationRetrieveValue: PropTypes.func.isRequired,
+  sendUserMessage: PropTypes.func.isRequired,
+  submitConversationRetrieveValue: PropTypes.func.isRequired,
+  alreadyHaveAConversation: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     messageInput: state.chat.messageInput,
+    conversationRetrieveValue: state.chat.conversationRetrieveValue,
     theme: state.user.theme,
-    botIsThinkingBool: state.chat.botIsThinking
+    botIsThinkingBool: state.chat.botIsThinking,
+    alreadyHaveAConversation: state.chat.conversationID !== null
   };
 }
 
@@ -110,6 +125,12 @@ function mapDispatchToProps(dispatch) {
     },
     changeMessageInput: value => {
       dispatch(changeMessageInput(value));
+    },
+    changeConversationRetrieveValue: value => {
+      dispatch(changeConversationRetrieveValue(value));
+    },
+    submitConversationRetrieveValue: () => {
+      dispatch(submitConversationRetrieveValue());
     }
   };
 }

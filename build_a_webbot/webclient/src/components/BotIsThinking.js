@@ -33,12 +33,12 @@ function BotIsThinking({ classes, show }) {
 }
 
 BotIsThinking.propTypes = {
-  classes: PropTypes.object,
+  classes: PropTypes.object.isRequired,
   show: PropTypes.bool
 };
 
 BotIsThinking.defaultProps = {
-  show: false
+  show: true
 };
 
 export default withStyles(styles)(BotIsThinking);
