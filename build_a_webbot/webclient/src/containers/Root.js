@@ -14,7 +14,9 @@ import {
   receiveMessage,
   changeMessageInput,
   changeConversationRetrieveValue,
-  submitConversationRetrieveValue
+  submitConversationRetrieveValue,
+  resetConversation,
+  toggleShowMoreButtons
 } from "actions";
 import { switchTheme } from "actions";
 
@@ -42,37 +44,12 @@ class Root extends Component {
   }
 
   render() {
-    const {
-      botIsThinkingBool,
-      changeTheme,
-      theme,
-      messageInput,
-      changeMessageInput,
-      sendUserMessage,
-      conversationRetrieveValue,
-      changeConversationRetrieveValue,
-      alreadyHaveAConversation,
-      submitConversationRetrieveValue
-    } = this.props;
-    return (
-      <App
-        botIsThinking={botIsThinkingBool}
-        changeTheme={changeTheme}
-        theme={theme}
-        changeMessageInput={changeMessageInput}
-        messageInput={messageInput}
-        sendMessage={sendUserMessage}
-        changeConversationRetrieveValue={changeConversationRetrieveValue}
-        conversationRetrieveValue={conversationRetrieveValue}
-        submitConversationRetrieveValue={submitConversationRetrieveValue}
-        alreadyHaveAConversation={alreadyHaveAConversation}
-      />
-    );
+    return <App {...this.props} />;
   }
 }
 
 Root.propTypes = {
-  botIsThinkingBool: PropTypes.bool.isRequired,
+  botIsCurrentlyThinking: PropTypes.bool.isRequired,
   changeTheme: PropTypes.func.isRequired,
   theme: PropTypes.string.isRequired,
   messageInput: PropTypes.string.isRequired,
@@ -81,7 +58,10 @@ Root.propTypes = {
   changeConversationRetrieveValue: PropTypes.func.isRequired,
   sendUserMessage: PropTypes.func.isRequired,
   submitConversationRetrieveValue: PropTypes.func.isRequired,
-  alreadyHaveAConversation: PropTypes.bool.isRequired
+  alreadyHaveAConversation: PropTypes.bool.isRequired,
+  resetConversation: PropTypes.func.isRequired,
+  toggleShowMoreButtons: PropTypes.func.isRequired,
+  showMoreButtons: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {
@@ -89,8 +69,9 @@ function mapStateToProps(state) {
     messageInput: state.chat.messageInput,
     conversationRetrieveValue: state.chat.conversationRetrieveValue,
     theme: state.user.theme,
-    botIsThinkingBool: state.chat.botIsThinking,
-    alreadyHaveAConversation: state.chat.conversationID !== null
+    botIsCurrentlyThinking: state.chat.botIsThinking,
+    alreadyHaveAConversation: state.chat.conversationID !== null,
+    showMoreButtons: state.user.showMoreButtons
   };
 }
 
@@ -131,6 +112,12 @@ function mapDispatchToProps(dispatch) {
     },
     submitConversationRetrieveValue: () => {
       dispatch(submitConversationRetrieveValue());
+    },
+    resetConversation: () => {
+      dispatch(resetConversation());
+    },
+    toggleShowMoreButtons: () => {
+      dispatch(toggleShowMoreButtons());
     }
   };
 }

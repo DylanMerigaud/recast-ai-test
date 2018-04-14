@@ -10,7 +10,9 @@ import {
   CHANGE_MESSAGE_INPUT,
   CHANGE_CONVERSATION_RETRIEVE_VALUE,
   SUBMIT_CONVERSATION_RETRIEVE_VALUE,
-  SWITCH_THEME
+  RESET_CONVERSATION,
+  SWITCH_THEME,
+  TOGGLE_SHOW_MORE_BUTTONS
 } from "actions";
 
 import Cookies from "js-cookie";
@@ -24,7 +26,8 @@ const initialChatState = {
   botIsThinking: false,
   error: false,
   messageInput: "",
-  conversationRetrieveValue: ""
+  conversationRetrieveValue: "",
+  socket: null
 };
 
 const chat = (state = initialChatState, action) => {
@@ -92,12 +95,16 @@ const chat = (state = initialChatState, action) => {
     return Object.assign({}, state, { conversationRetrieveValue: value });
   } else if (type === SUBMIT_CONVERSATION_RETRIEVE_VALUE) {
     state.socket.emit("retrieveConversation", state.conversationRetrieveValue);
+  } else if (type === RESET_CONVERSATION) {
+    Cookies.remove("conversationID");
+    return Object.assign({}, initialChatState, { socket: state.socket });
   }
   return state;
 };
 
 const initialUserState = {
-  theme: Cookies.get("theme") || "light"
+  theme: Cookies.get("theme") || "light",
+  showMoreButtons: false
 };
 
 const user = (state = initialUserState, action) => {
@@ -106,6 +113,10 @@ const user = (state = initialUserState, action) => {
     const newTheme = state.theme === "dark" ? "light" : "dark";
     Cookies.set("theme", newTheme);
     return Object.assign({}, state, { theme: newTheme });
+  } else if (type === TOGGLE_SHOW_MORE_BUTTONS) {
+    return Object.assign({}, state, {
+      showMoreButtons: !state.showMoreButtons
+    });
   }
   return state;
 };

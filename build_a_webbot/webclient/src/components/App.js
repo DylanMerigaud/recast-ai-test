@@ -3,6 +3,7 @@ import { withStyles } from "material-ui/styles";
 import { MuiThemeProvider, createMuiTheme } from "material-ui/styles";
 import Chat from "containers/Chat";
 import DialogConversationRetrieve from "components/DialogConversationRetrieve";
+import SettingsButtons from "components/SettingsButtons";
 import UserInput from "components/UserInput";
 import grey from "material-ui/colors/grey";
 import blue from "material-ui/colors/blue";
@@ -30,7 +31,8 @@ const lightTheme = createMuiTheme({
       serverMessage: grey[200],
       userMessage: blue[200],
       copyToClipboard: grey[300],
-      pendingMessage: orange[200]
+      pendingMessage: orange[200],
+      moreButtons: grey[400]
     },
     scrollBar: grey[400]
   }
@@ -43,7 +45,8 @@ const darkTheme = createMuiTheme({
       serverMessage: grey[500],
       userMessage: blue[500],
       copyToClipboard: grey[600],
-      pendingMessage: orange[500]
+      pendingMessage: orange[500],
+      moreButtons: grey[700]
     },
     scrollBar: grey[100]
   }
@@ -57,22 +60,33 @@ function App({
   conversationRetrieveValue,
   messageInput,
   changeTheme,
-  sendMessage,
+  sendUserMessage,
   submitConversationRetrieveValue,
-  botIsThinking,
-  alreadyHaveAConversation
+  botIsCurrentlyThinking,
+  alreadyHaveAConversation,
+  resetConversation,
+  toggleShowMoreButtons,
+  showMoreButtons
 }) {
   const currentTheme = theme === "dark" ? darkTheme : lightTheme;
   return (
     <MuiThemeProvider theme={currentTheme}>
       <div className={classes.root}>
-        <Chat botIsThinking={botIsThinking} />
+        <Chat botIsThinking={botIsCurrentlyThinking} />
         <UserInput
           changeTheme={changeTheme}
           onChange={changeMessageInput}
           value={messageInput}
-          onSubmit={sendMessage}
-        />
+          onSubmit={sendUserMessage}
+          showMoreButtons={showMoreButtons}
+          onSettings={toggleShowMoreButtons}
+          resetConversation={resetConversation}
+        >
+          <SettingsButtons
+            changeTheme={changeTheme}
+            resetConversation={resetConversation}
+          />
+        </UserInput>
         <DialogConversationRetrieve
           onChange={changeConversationRetrieveValue}
           value={conversationRetrieveValue}
@@ -92,14 +106,12 @@ App.propTypes = {
   conversationRetrieveValue: PropTypes.string.isRequired,
   changeConversationRetrieveValue: PropTypes.func.isRequired,
   changeTheme: PropTypes.func.isRequired,
-  sendMessage: PropTypes.func.isRequired,
+  sendUserMessage: PropTypes.func.isRequired,
   submitConversationRetrieveValue: PropTypes.func.isRequired,
-  botIsThinking: PropTypes.bool.isRequired,
-  alreadyHaveAConversation: PropTypes.bool.isRequired
-};
-
-App.defaultProps = {
-  theme: "light"
+  botIsCurrentlyThinking: PropTypes.bool.isRequired,
+  alreadyHaveAConversation: PropTypes.bool.isRequired,
+  toggleShowMoreButtons: PropTypes.func.isRequired,
+  showMoreButtons: PropTypes.bool.isRequired
 };
 
 export default withStyles(styles)(App);

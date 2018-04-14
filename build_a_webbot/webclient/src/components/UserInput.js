@@ -3,13 +3,13 @@ import { withStyles } from "material-ui/styles";
 import Input from "material-ui/Input";
 import IconButton from "material-ui/IconButton";
 // import MdImage from "react-icons/lib/md/image";
-import LightbulbOutline from "@material-ui/icons/LightbulbOutline";
+import Settings from "@material-ui/icons/Settings";
 import Send from "@material-ui/icons/Send";
 import PropTypes from "prop-types";
-import Tooltip from "material-ui/Tooltip";
 
 const styles = theme => ({
   root: {
+    position: "relative",
     minHeight: "48px",
     padding: "6px",
     backgroundColor: theme.palette.background.default,
@@ -19,10 +19,26 @@ const styles = theme => ({
   },
   input: {
     flexGrow: "1"
+  },
+  moreButtons: {
+    display: "flex",
+    flexDirection: "column-reverse",
+    backgroundColor: theme.palette.background.moreButtons,
+    position: "absolute",
+    right: "0px",
+    bottom: "100%"
   }
 });
 
-function UserInput({ classes, onChange, value, changeTheme, onSubmit }) {
+function UserInput({
+  classes,
+  onChange,
+  value,
+  onSubmit,
+  onSettings,
+  showMoreButtons,
+  children
+}) {
   return (
     <form
       onSubmit={e => {
@@ -38,23 +54,20 @@ function UserInput({ classes, onChange, value, changeTheme, onSubmit }) {
         onChange={e => onChange(e.target.value)}
         value={value}
       />
-      <Tooltip title="Send the message.">
-        <div>
-          <IconButton disabled={value === ""} type="submit">
-            <Send />
-          </IconButton>
-        </div>
-      </Tooltip>
+      <div>
+        <IconButton disabled={value === ""} type="submit">
+          <Send />
+        </IconButton>
+      </div>
       {
         //   <IconButton>
         //   <MdImage />
         // </IconButton>
       }
-      <Tooltip title="Change the theme.">
-        <IconButton>
-          <LightbulbOutline onClick={changeTheme} />
-        </IconButton>
-      </Tooltip>
+      <IconButton onClick={onSettings}>
+        <Settings />
+      </IconButton>
+      {showMoreButtons && <div className={classes.moreButtons}>{children}</div>}
     </form>
   );
 }
@@ -62,8 +75,14 @@ function UserInput({ classes, onChange, value, changeTheme, onSubmit }) {
 UserInput.propTypes = {
   classes: PropTypes.object.isRequired,
   value: PropTypes.string.isRequired,
-  changeTheme: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  onSettings: PropTypes.func.isRequired,
+  showMoreButtons: PropTypes.bool.isRequired,
+  children: PropTypes.object
+};
+
+UserInput.defaultProps = {
+  children: []
 };
 
 export default withStyles(styles)(UserInput);

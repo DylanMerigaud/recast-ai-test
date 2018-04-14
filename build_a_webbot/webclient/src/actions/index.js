@@ -60,8 +60,20 @@ export const submitConversationRetrieveValue = () => ({
   type: SUBMIT_CONVERSATION_RETRIEVE_VALUE
 });
 
+export const RESET_CONVERSATION = "RESET_CONVERSATION";
+
+export const resetConversation = () => ({
+  type: RESET_CONVERSATION
+});
+
 export const SWITCH_THEME = "SWITCH_THEME";
 
 export const switchTheme = () => ({
   type: SWITCH_THEME
+});
+
+export const TOGGLE_SHOW_MORE_BUTTONS = "TOGGLE_SHOW_MORE_BUTTONS";
+
+export const toggleShowMoreButtons = () => ({
+  type: TOGGLE_SHOW_MORE_BUTTONS
 });
