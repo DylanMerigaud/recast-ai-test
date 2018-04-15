@@ -10,7 +10,7 @@ const styles = (theme) => ({
   root: {
     backgroundColor: theme.palette.background.serverMessage,
     borderRadius: '25px',
-    padding: '6px 15px 6px 15px',
+    padding: '8px 15px 8px 15px',
     margin: '0 0 6px 0',
     wordBreak: 'break-word',
     whiteSpace: 'pre-wrap',

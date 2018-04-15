@@ -30,11 +30,11 @@ const lightTheme = createMuiTheme({
     background: {
       serverMessage: grey[200],
       userMessage: blue[200],
-      copyToClipboard: grey[300],
       pendingMessage: orange[200],
       moreButtons: grey[400],
     },
-    scrollBar: grey[400],
+    scrollBarThumb: grey[400],
+    copyToClipboard: grey[400],
   },
 });
 
@@ -44,11 +44,11 @@ const darkTheme = createMuiTheme({
     background: {
       serverMessage: grey[500],
       userMessage: blue[500],
-      copyToClipboard: grey[600],
       pendingMessage: orange[500],
       moreButtons: grey[700],
     },
-    scrollBar: grey[100],
+    scrollBarThumb: grey[100],
+    copyToClipboard: grey[600],
   },
 });
 

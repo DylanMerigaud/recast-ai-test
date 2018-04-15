@@ -16,7 +16,7 @@ const styles = (theme) => {
         width: '6px',
       },
       '&::-webkit-scrollbar-thumb': {
-        backgroundColor: theme.palette.scrollBar,
+        backgroundColor: theme.palette.scrollBarThumb,
       },
     },
   };

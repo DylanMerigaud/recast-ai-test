@@ -9,7 +9,7 @@ import Button from 'material-ui/Button';
 const styles = (theme) => ({
   root: {
     width: 'fit-content',
-    border: `1px solid ${theme.palette.background.copyToClipboard}`,
+    border: `1px solid ${theme.palette.copyToClipboard}`,
     display: 'flex',
     alignItems: 'center',
     borderRadius: '25px',
@@ -18,6 +18,7 @@ const styles = (theme) => ({
     fontSize: '20px',
   },
   button: {
+    borderLeft: `1px solid ${theme.palette.copyToClipboard}`,
     borderRadius: '0px 25px 25px 0px',
   },
   text: {
