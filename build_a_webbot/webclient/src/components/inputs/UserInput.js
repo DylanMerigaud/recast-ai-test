@@ -1,33 +1,34 @@
-import React from "react";
-import { withStyles } from "material-ui/styles";
-import Input from "material-ui/Input";
-import IconButton from "material-ui/IconButton";
+import React from 'react';
+import { withStyles } from 'material-ui/styles';
+import Input from 'material-ui/Input';
+import IconButton from 'material-ui/IconButton';
 // import MdImage from "react-icons/lib/md/image";
-import Settings from "@material-ui/icons/Settings";
-import Send from "@material-ui/icons/Send";
-import PropTypes from "prop-types";
+import Settings from '@material-ui/icons/Settings';
+import Send from '@material-ui/icons/Send';
+import PropTypes from 'prop-types';
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
-    position: "relative",
-    minHeight: "48px",
-    padding: "6px",
+    userSelect: 'none',
+    position: 'relative',
+    minHeight: '48px',
+    padding: '6px',
     backgroundColor: theme.palette.background.default,
-    display: "flex",
-    alignItems: "center",
-    borderTop: `1px solid ${theme.palette.divider}`
+    display: 'flex',
+    alignItems: 'center',
+    borderTop: `1px solid ${theme.palette.divider}`,
   },
   input: {
-    flexGrow: "1"
+    flexGrow: '1',
   },
   moreButtons: {
-    display: "flex",
-    flexDirection: "column-reverse",
+    display: 'flex',
+    flexDirection: 'column-reverse',
     backgroundColor: theme.palette.background.moreButtons,
-    position: "absolute",
-    right: "0px",
-    bottom: "100%"
-  }
+    position: 'absolute',
+    right: '0px',
+    bottom: '100%',
+  },
 });
 
 function UserInput({
@@ -37,11 +38,11 @@ function UserInput({
   onSubmit,
   onSettings,
   showMoreButtons,
-  children
+  children,
 }) {
   return (
     <form
-      onSubmit={e => {
+      onSubmit={(e) => {
         e.preventDefault();
         onSubmit();
       }}
@@ -51,11 +52,11 @@ function UserInput({
         className={classes.input}
         disableUnderline
         placeholder="Type a message..."
-        onChange={e => onChange(e.target.value)}
+        onChange={(e) => onChange(e.target.value)}
         value={value}
       />
       <div>
-        <IconButton disabled={value === ""} type="submit">
+        <IconButton disabled={value === ''} type="submit">
           <Send />
         </IconButton>
       </div>
@@ -78,11 +79,11 @@ UserInput.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onSettings: PropTypes.func.isRequired,
   showMoreButtons: PropTypes.bool.isRequired,
-  children: PropTypes.object
+  children: PropTypes.object,
 };
 
 UserInput.defaultProps = {
-  children: []
+  children: [],
 };
 
 export default withStyles(styles)(UserInput);

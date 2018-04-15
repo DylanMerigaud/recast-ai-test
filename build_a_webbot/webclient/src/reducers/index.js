@@ -12,30 +12,35 @@ import {
   SUBMIT_CONVERSATION_RETRIEVE_VALUE,
   RESET_CONVERSATION,
   SWITCH_THEME,
-  TOGGLE_SHOW_MORE_BUTTONS
-} from "actions";
+  TOGGLE_SHOW_MORE_BUTTONS,
+} from 'actions';
 
-import Cookies from "js-cookie";
-import shortid from "shortid";
-import { combineReducers } from "redux";
+import Cookies from 'js-cookie';
+import shortid from 'shortid';
+import { combineReducers } from 'redux';
 
 const initialChatState = {
-  conversationID: Cookies.get("conversationID") || null,
+  conversationID: null,
   conversationLoading: false,
   messages: [],
   botIsThinking: false,
   error: false,
-  messageInput: "",
-  conversationRetrieveValue: "",
-  socket: null
+  messageInput: '',
+  conversationRetrieveValue: '',
+  socket: null,
 };
 
 const chat = (state = initialChatState, action) => {
   const { type, conversation, message, socket, value, typeMessage } = action;
   if (type === SET_SOCKET) {
-    if (state.conversationID !== null) {
-      socket.emit("retrieveConversation", state.conversationID);
-      return Object.assign({}, state, { socket, conversationLoading: true });
+    const conversationIDFromCookies = Cookies.get('conversationID');
+    if (conversationIDFromCookies !== undefined) {
+      socket.emit('retrieveConversation', conversationIDFromCookies);
+      return Object.assign({}, state, {
+        socket,
+        conversationLoading: true,
+        conversationID: conversationIDFromCookies,
+      });
     } else {
       return Object.assign({}, state, { socket });
     }
@@ -43,33 +48,33 @@ const chat = (state = initialChatState, action) => {
     //Cookies.remove("conversationID");
     return Object.assign({}, state, { error: true });
   } else if (type === RETRIEVE_CONVERSATION_DONE) {
-    Cookies.set("conversationID", conversation._id);
+    Cookies.set('conversationID', conversation._id);
     const newMessages = state.messages.concat(conversation.messages);
     return Object.assign({}, state, {
       conversationID: conversation._id,
-      messages: newMessages
+      messages: newMessages,
     });
   } else if (type === SEND_USER_MESSAGE) {
     const message = {
       content: state.messageInput,
       tempId: shortid.generate(),
-      origin: "user",
-      type: typeMessage
+      origin: 'user',
+      type: typeMessage,
     };
     const newMessages = state.messages.slice();
     newMessages.push(message);
-    state.socket.emit("sendUserMessage", {
+    state.socket.emit('sendUserMessage', {
       message,
-      conversationID: state.conversationID
+      conversationID: state.conversationID,
     });
     return Object.assign({}, state, {
       messages: newMessages,
-      messageInput: ""
+      messageInput: '',
     });
   } else if (type === SEND_USER_MESSAGE_DONE) {
     const newMessages = state.messages.slice();
     const existingMessageIndex = newMessages.findIndex(
-      x => x.tempId === message.tempId
+      (x) => x.tempId === message.tempId,
     );
     if (existingMessageIndex !== -1) {
       delete newMessages[existingMessageIndex].tempId;
@@ -79,7 +84,7 @@ const chat = (state = initialChatState, action) => {
       newMessages.push(message);
     }
     return Object.assign({}, state, {
-      messages: newMessages
+      messages: newMessages,
     });
   } else if (type === BOT_IS_THINKING) {
     return Object.assign({}, state, { botIsThinking: true });
@@ -94,31 +99,30 @@ const chat = (state = initialChatState, action) => {
   } else if (type === CHANGE_CONVERSATION_RETRIEVE_VALUE) {
     return Object.assign({}, state, { conversationRetrieveValue: value });
   } else if (type === SUBMIT_CONVERSATION_RETRIEVE_VALUE) {
-    state.socket.emit("retrieveConversation", state.conversationRetrieveValue);
+    state.socket.emit('retrieveConversation', state.conversationRetrieveValue);
   } else if (type === RESET_CONVERSATION) {
-    Cookies.remove("conversationID");
+    Cookies.remove('conversationID');
     return Object.assign({}, initialChatState, {
-      conversationID: null,
-      socket: state.socket
+      socket: state.socket,
     });
   }
   return state;
 };
 
 const initialUserState = {
-  theme: Cookies.get("theme") || "light",
-  showMoreButtons: false
+  theme: Cookies.get('theme') || 'light',
+  showMoreButtons: false,
 };
 
 const user = (state = initialUserState, action) => {
   const { type } = action;
   if (type === SWITCH_THEME) {
-    const newTheme = state.theme === "dark" ? "light" : "dark";
-    Cookies.set("theme", newTheme);
+    const newTheme = state.theme === 'dark' ? 'light' : 'dark';
+    Cookies.set('theme', newTheme);
     return Object.assign({}, state, { theme: newTheme });
   } else if (type === TOGGLE_SHOW_MORE_BUTTONS) {
     return Object.assign({}, state, {
-      showMoreButtons: !state.showMoreButtons
+      showMoreButtons: !state.showMoreButtons,
     });
   }
   return state;
@@ -126,7 +130,7 @@ const user = (state = initialUserState, action) => {
 
 const rootReducer = combineReducers({
   chat,
-  user
+  user,
 });
 
 export default rootReducer;

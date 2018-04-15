@@ -1,14 +1,14 @@
-import React from "react";
-import { connect } from "react-redux";
-import Message from "components/Message";
-import BotIsThinking from "components/BotIsThinking";
-import Conversation from "components/Conversation";
-import PropTypes from "prop-types";
+import React from 'react';
+import { connect } from 'react-redux';
+import Message from 'components/conversation/Message';
+import BotIsThinking from 'components/conversation/BotIsThinking';
+import Conversation from 'components/conversation/Conversation';
+import PropTypes from 'prop-types';
 
 function originIsEqual(originOne, originTwo) {
   if (
-    (originOne === "user" && originTwo !== "user") ||
-    (originOne !== "user" && originTwo === "user")
+    (originOne === 'user' && originTwo !== 'user') ||
+    (originOne !== 'user' && originTwo === 'user')
   )
     return false;
   else return true;
@@ -33,7 +33,7 @@ function getMessageGroupProps(messages, index) {
   return {
     inGroup,
     startingGroup,
-    endingGroup
+    endingGroup,
   };
 }
 
@@ -46,7 +46,7 @@ function Chat(props) {
           <Message
             content={content}
             type={type}
-            fromUser={origin === "user"}
+            fromUser={origin === 'user'}
             key={_id || tempId}
             pending={!_id}
             {...getMessageGroupProps(messages, index)}
@@ -60,18 +60,18 @@ function Chat(props) {
 
 Chat.propTypes = {
   messages: PropTypes.array.isRequired,
-  botIsThinking: PropTypes.bool.isRequired
+  botIsThinking: PropTypes.bool.isRequired,
 };
 
 Chat.defaultProps = {
   messages: [],
-  botIsThinking: false
+  botIsThinking: false,
 };
 
 function mapStateToProps(state) {
   return {
     messages: state.chat.messages,
-    botIsThinking: state.chat.botIsThinking
+    botIsThinking: state.chat.botIsThinking,
   };
 }
 

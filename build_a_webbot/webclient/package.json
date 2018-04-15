@@ -73,7 +73,7 @@
   },
   "lint-staged": {
     "*.{js,jsx}": [
-      "prettier --write",
+      "prettier --single-quote --trailing-comma all --arrow-parens always --write",
       "cross-env CI=true node scripts/test.js --env=jsdom --bail --findRelatedTests",
       "git add"
     ],

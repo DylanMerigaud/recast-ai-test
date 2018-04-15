@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import initSocket from "utils/socket";
-import App from "components/App";
-import PropTypes from "prop-types";
+import React from 'react';
+import { connect } from 'react-redux';
+import initSocket from 'utils/socket';
+import App from 'components/App';
+import PropTypes from 'prop-types';
 import {
   setSocket,
   anErrorOccured,
@@ -16,11 +16,11 @@ import {
   changeConversationRetrieveValue,
   submitConversationRetrieveValue,
   resetConversation,
-  toggleShowMoreButtons
-} from "actions";
-import { switchTheme } from "actions";
+  toggleShowMoreButtons,
+} from 'actions';
+import { switchTheme } from 'actions';
 
-class Root extends Component {
+class Root extends React.Component {
   componentDidMount() {
     const {
       setSocket,
@@ -29,7 +29,7 @@ class Root extends Component {
       sendUserMessageDone,
       botIsThinking,
       botIsThinkingDone,
-      receiveMessage
+      receiveMessage,
     } = this.props;
     setSocket(
       initSocket({
@@ -38,13 +38,18 @@ class Root extends Component {
         sendUserMessageDone,
         botIsThinking,
         botIsThinkingDone,
-        receiveMessage
-      })
+        receiveMessage,
+      }),
     );
   }
 
   render() {
-    return <App {...this.props} />;
+    return (
+      <App
+        {...this.props}
+        alreadyHaveAConversation={this.props.conversationID !== null}
+      />
+    );
   }
 }
 
@@ -58,10 +63,10 @@ Root.propTypes = {
   changeConversationRetrieveValue: PropTypes.func.isRequired,
   sendUserMessage: PropTypes.func.isRequired,
   submitConversationRetrieveValue: PropTypes.func.isRequired,
-  alreadyHaveAConversation: PropTypes.bool.isRequired,
+  conversationID: PropTypes.string,
   resetConversation: PropTypes.func.isRequired,
   toggleShowMoreButtons: PropTypes.func.isRequired,
-  showMoreButtons: PropTypes.bool.isRequired
+  showMoreButtons: PropTypes.bool.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -70,8 +75,8 @@ function mapStateToProps(state) {
     conversationRetrieveValue: state.chat.conversationRetrieveValue,
     theme: state.user.theme,
     botIsCurrentlyThinking: state.chat.botIsThinking,
-    alreadyHaveAConversation: state.chat.conversationID !== null,
-    showMoreButtons: state.user.showMoreButtons
+    conversationID: state.chat.conversationID,
+    showMoreButtons: state.user.showMoreButtons,
   };
 }
 
@@ -80,19 +85,19 @@ function mapDispatchToProps(dispatch) {
     changeTheme: () => {
       dispatch(switchTheme());
     },
-    setSocket: socket => {
+    setSocket: (socket) => {
       dispatch(setSocket(socket));
     },
     anErrorOccured: () => {
       dispatch(anErrorOccured());
     },
-    retrieveConversationDone: conversation => {
+    retrieveConversationDone: (conversation) => {
       dispatch(retrieveConversationDone(conversation));
     },
     sendUserMessage: () => {
       dispatch(sendUserMessage());
     },
-    sendUserMessageDone: message => {
+    sendUserMessageDone: (message) => {
       dispatch(sendUserMessageDone(message));
     },
     botIsThinking: () => {
@@ -101,13 +106,13 @@ function mapDispatchToProps(dispatch) {
     botIsThinkingDone: () => {
       dispatch(botIsThinkingDone());
     },
-    receiveMessage: message => {
+    receiveMessage: (message) => {
       dispatch(receiveMessage(message));
     },
-    changeMessageInput: value => {
+    changeMessageInput: (value) => {
       dispatch(changeMessageInput(value));
     },
-    changeConversationRetrieveValue: value => {
+    changeConversationRetrieveValue: (value) => {
       dispatch(changeConversationRetrieveValue(value));
     },
     submitConversationRetrieveValue: () => {
@@ -118,7 +123,7 @@ function mapDispatchToProps(dispatch) {
     },
     toggleShowMoreButtons: () => {
       dispatch(toggleShowMoreButtons());
-    }
+    },
   };
 }
 
